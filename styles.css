@@ -52,25 +52,25 @@ body {
     font-size: 0 !important;
   }
 
-  /* Color coding styles (only for enabled dates) */
+/* Color coding styles (only for enabled dates) */
   .fc-daygrid-day.off-peak:not(.fc-day-disabled) {
-    background-color: #66D9FF !important;
-    color: white !important;
-  }
-
-  .fc-daygrid-day.peak:not(.fc-day-disabled) {
-    background-color: #FF8800 !important;
-    color: white !important;
+    background-color: #07EBED !important;
+    color: #0E186F !important;
   }
 
   .fc-daygrid-day.standard:not(.fc-day-disabled) {
-    background-color: #BF2C24 !important;
-    color: white !important;
+    background-color: #FFFF05 !important;
+    color: #0E186F !important;
+  }
+
+  .fc-daygrid-day.peak:not(.fc-day-disabled) {
+    background-color: #FE01B3 !important;
+    color: #FFFFFF !important;
   }
 
   .fc-daygrid-day.closed:not(.fc-day-disabled) {
-    background-color: #001069 !important;
-    color: white !important;
+    background-color: #1C2031 !important;
+    color: #FFFFFF !important;
   }
 
   /* DISABLED STATE OVERRIDES - These have higher specificity and will override the above */
@@ -92,15 +92,11 @@ body {
     cursor: not-allowed !important;
   }
 
-  /* Ensure hover effects don't work on disabled dates */
-  .fc-daygrid-day.fc-day-disabled:hover {
-    background-color: #f5f5f5 !important; /* Keep gray on hover */
-    color: #ccc !important;
-  }
 
   /* Disabled day numbers should be grayed out */
   .fc-day-disabled .fc-daygrid-day-number {
     color: #ccc !important;
+    pointer:none;
   }
 
   /* Header styling */
@@ -114,21 +110,21 @@ body {
     background-color: rgba(255, 255, 0, 0.15) !important;
   }
 
-  /* Hover effects for colored dates (only for enabled dates) */
+/* Hover effects for colored dates (only for enabled dates) */
   .fc-daygrid-day.off-peak:not(.fc-day-disabled):hover {
-    background-color: #4DC3F0 !important;
-  }
-
-  .fc-daygrid-day.peak:not(.fc-day-disabled):hover {
-    background-color: #E07700 !important;
+    background-color: #05C4C6 !important;
   }
 
   .fc-daygrid-day.standard:not(.fc-day-disabled):hover {
-    background-color: #A02420 !important;
+    background-color: #E0E000 !important;
+  }
+
+  .fc-daygrid-day.peak:not(.fc-day-disabled):hover {
+    background-color: #D4019A !important;
   }
 
   .fc-daygrid-day.closed:not(.fc-day-disabled):hover {
-    background-color: #000856 !important;
+    background-color: #0F121D !important;
   }
 
   /* Force calendar to show exactly 5 rows */
