@@ -1,0 +1,273 @@
+  /* Hide the default FullCalendar v6 icons */
+  .fc-icon {
+    display: none !important;
+  }
+
+  /* Style the navigation buttons */
+  .fc-button {
+    background-color: #9FC8FA !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+  }
+
+  /* Next button with your custom SVG */
+  .fc-next-button {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.293 17.293L12.707 18.707L19.414 12L12.707 5.29297L11.293 6.70697L15.586 11H6V13H15.586L11.293 17.293Z' fill='%23000'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Previous button (reversed arrow) */
+  .fc-prev-button {
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.707 6.70703L11.293 5.29303L4.586 12L11.293 18.707L12.707 17.293L8.414 13H18V11H8.414L12.707 6.70703Z' fill='%23000'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Hover state for buttons */
+  .fc-button:hover {
+    background-color: #7FA0C8 !important;
+  }
+
+  .fc-button:disabled {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+    background-color: #ccc !important;
+  }
+
+  /* Remove any text content from buttons */
+  .fc-button-primary {
+    font-size: 0 !important;
+  }
+
+  /* Color coding styles (only for enabled dates) */
+  .fc-daygrid-day.off-peak:not(.fc-day-disabled) {
+    background-color: #66D9FF !important;
+    color: white !important;
+  }
+
+  .fc-daygrid-day.peak:not(.fc-day-disabled) {
+    background-color: #FF8800 !important;
+    color: white !important;
+  }
+
+  .fc-daygrid-day.standard:not(.fc-day-disabled) {
+    background-color: #BF2C24 !important;
+    color: white !important;
+  }
+
+  .fc-daygrid-day.closed:not(.fc-day-disabled) {
+    background-color: #001069 !important;
+    color: white !important;
+  }
+
+  /* DISABLED STATE OVERRIDES - These have higher specificity and will override the above */
+  .fc-daygrid-day.fc-day-disabled {
+    background-color: #f5f5f5 !important; /* Light gray background */
+    color: #ccc !important; /* Light gray text */
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Specific overrides for disabled dates with color classes */
+  .fc-daygrid-day.fc-day-disabled.off-peak,
+  .fc-daygrid-day.fc-day-disabled.peak,
+  .fc-daygrid-day.fc-day-disabled.standard,
+  .fc-daygrid-day.fc-day-disabled.closed {
+    background-color: #f5f5f5 !important; /* Override any color with gray */
+    color: #ccc !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Ensure hover effects don't work on disabled dates */
+  .fc-daygrid-day.fc-day-disabled:hover {
+    background-color: #f5f5f5 !important; /* Keep gray on hover */
+    color: #ccc !important;
+  }
+
+  /* Disabled day numbers should be grayed out */
+  .fc-day-disabled .fc-daygrid-day-number {
+    color: #ccc !important;
+  }
+
+  /* Header styling */
+  .fc-toolbar-title {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+  }
+
+  /* Today highlight (only if not disabled) */
+  .fc-day-today:not(.fc-day-disabled) {
+    background-color: rgba(255, 255, 0, 0.15) !important;
+  }
+
+  /* Hover effects for colored dates (only for enabled dates) */
+  .fc-daygrid-day.off-peak:not(.fc-day-disabled):hover {
+    background-color: #4DC3F0 !important;
+  }
+
+  .fc-daygrid-day.peak:not(.fc-day-disabled):hover {
+    background-color: #E07700 !important;
+  }
+
+  .fc-daygrid-day.standard:not(.fc-day-disabled):hover {
+    background-color: #A02420 !important;
+  }
+
+  .fc-daygrid-day.closed:not(.fc-day-disabled):hover {
+    background-color: #000856 !important;
+  }
+
+  /* Force calendar to show exactly 5 rows */
+  .fc-daygrid-body {
+    height: auto !important;
+  }
+
+  /* Hide the 6th row if it appears */
+  .fc-daygrid-body .fc-scrollgrid tbody tr:nth-child(6) {
+    display: none !important;
+  }
+
+  /* Hide the collection list */
+  .ec-col-list-wrap {
+    display: none !important;
+  }
+
+  /* Ensure calendar container is visible */
+  #divCalendar {
+    width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+  }
+
+  /* Make sure the fullcalendar shows */
+  .fc {
+    direction: ltr !important;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .fc table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  .fc-view {
+    overflow: hidden !important;
+  }
+
+  /* CENTER ALIGNMENT FOR DAY NUMBERS - FLEXBOX METHOD (RECOMMENDED) */
+  .fc-daygrid-day-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  .fc-daygrid-day-number {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  /* DESKTOP HEIGHT SETTINGS - 64px for all day elements */
+  .fc-daygrid-day {
+    height: 64px !important;
+    min-height: 64px !important;
+  }
+
+  .fc-daygrid-day-frame {
+    height: 64px !important;
+    min-height: 64px !important;
+    position: relative !important;
+  }
+
+  .fc-daygrid-week {
+    min-height: 64px !important;
+  }
+
+  .fc-daygrid-day.fc-day-disabled{
+    pointer-events:none;
+    opacity:0.2;
+  }
+
+  /* Style for December days that don't have any color class defined */
+  .fc-daygrid-day[data-date^="2025-12"]:not(.off-peak):not(.standard):not(.peak):not(.closed):not(.disabled-date),
+  .fc-daygrid-day[data-date^="2026-03"]:not(.off-peak):not(.standard):not(.peak):not(.closed):not(.disabled-date) {
+    opacity: 0.3 !important;
+  }
+
+  /* Mobile calendar cell height adjustments */
+  @media (max-width: 768px) {
+    .fc-daygrid-day {
+      height: 40px !important;
+      min-height: 40px !important;
+    }
+
+    .fc-daygrid-day-frame {
+      height: 40px !important;
+      min-height: 40px !important;
+    }
+
+    .fc-daygrid-week {
+      min-height: 40px !important;
+    }
+
+    .fc-daygrid-day-number {
+      padding: 4px !important;
+      font-size: 14px !important;
+    }
+
+    .fc-daygrid-body {
+      font-size: 14px !important;
+    }
+
+    /* Reduce header height too */
+    .fc-col-header-cell {
+      height: 30px !important;
+      padding: 4px !important;
+    }
+
+    /* Reduce overall calendar height */
+    .fc-daygrid {
+      height: auto !important;
+    }
+  }
+
+  /* For very small screens, make it even more compact */
+  @media (max-width: 480px) {
+    .fc-daygrid-day {
+      height: 35px !important;
+      min-height: 35px !important;
+    }
+
+    .fc-daygrid-day-frame {
+      height: 35px !important;
+      min-height: 35px !important;
+    }
+
+    .fc-daygrid-week {
+      min-height: 35px !important;
+    }
+
+    .fc-daygrid-day-number {
+      padding: 2px !important;
+      font-size: 16px !important;
+    }
+
+    .fc-col-header-cell {
+      height: 25px !important;
+      padding: 2px !important;
+      font-size: 12px !important;
+    }
+  }
