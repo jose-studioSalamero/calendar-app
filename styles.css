@@ -1,4 +1,11 @@
-  /* Hide the default FullCalendar v6 icons */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+#divCalendar {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+
+/* Hide the default FullCalendar v6 icons */
   .fc-icon {
     display: none !important;
   }
