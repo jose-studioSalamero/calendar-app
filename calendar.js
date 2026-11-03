@@ -166,22 +166,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var currentViewDate = new Date("2026-12-01");
 
-    // Create separate static widgets for each event
+    // Use the parent document when same-origin so the Eventbrite modal renders
+    // above the embedding page instead of being clipped by the iframe.
+    var eventbriteWindow = window;
+    var eventbriteDocument = document;
+    var canAccessParent = true;
+    if (window.parent !== window) {
+      try {
+        eventbriteDocument = window.parent.document;
+        eventbriteDocument.documentElement;
+        eventbriteWindow = window.parent;
+      } catch (error) {
+        canAccessParent = false;
+      }
+    }
+
+    // Create a static widget in the document that should display the modal.
     var widgetsInitialized = false;
     var createdButtons = {};
 
     function createStaticWidgetsOnce() {
-      if (widgetsInitialized || !window.EBWidgets) {
+      if (widgetsInitialized || !eventbriteWindow.EBWidgets) {
         return;
       }
 
-      console.log("Creating static widgets for all events...");
+      console.log("Creating Eventbrite widgets in the display document...");
 
       // Create a hidden container for all buttons
-      var buttonContainer = document.createElement("div");
+      var buttonContainer = eventbriteDocument.createElement("div");
       buttonContainer.id = "eventbrite-buttons-container";
       buttonContainer.style.display = "none";
-      document.body.appendChild(buttonContainer);
+      eventbriteDocument.body.appendChild(buttonContainer);
 
       // Create a button and widget for each event
       Object.keys(eventMapping).forEach(function (dateStr) {
@@ -194,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Create button
-        var button = document.createElement("button");
+        var button = eventbriteDocument.createElement("button");
         button.id = buttonId;
         button.type = "button";
         button.textContent = "Buy Tickets";
@@ -203,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Create widget
         try {
-          window.EBWidgets.createWidget({
+          eventbriteWindow.EBWidgets.createWidget({
             widgetType: "checkout",
             eventId: eventId,
             modal: true,
@@ -221,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       widgetsInitialized = true;
-      console.log("All static widgets created successfully");
+      console.log("Eventbrite widgets created successfully");
     }
 
     function openEventbriteForDate(dateStr) {
@@ -232,6 +247,28 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      if (!canAccessParent) {
+        var parentOrigin = "*";
+        try {
+          if (document.referrer) {
+            parentOrigin = new URL(document.referrer).origin;
+          }
+        } catch (error) {
+          console.warn("Could not determine parent origin for Eventbrite request.");
+        }
+
+        console.log("Requesting parent page to open Eventbrite for:", dateStr);
+        window.parent.postMessage(
+          {
+            type: "calendar:open-eventbrite",
+            eventId: eventId,
+            date: dateStr,
+          },
+          parentOrigin,
+        );
+        return;
+      }
+
       var button = createdButtons[eventId];
       if (!button) {
         console.error("No button found for event:", eventId);
@@ -239,31 +276,42 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       var scrollPosition =
-        window.pageYOffset || document.documentElement.scrollTop;
+        eventbriteWindow.pageYOffset ||
+        eventbriteDocument.documentElement.scrollTop;
       var scrollLeft =
-        window.pageXOffset || document.documentElement.scrollLeft;
+        eventbriteWindow.pageXOffset ||
+        eventbriteDocument.documentElement.scrollLeft;
 
       console.log("Triggering widget for date:", dateStr, "Event ID:", eventId);
 
       button.click();
 
-      if (window.innerWidth <= 768) {
+      if (eventbriteWindow.innerWidth <= 768) {
         setTimeout(function () {
-          window.scrollTo(scrollLeft, scrollPosition);
+          eventbriteWindow.scrollTo(scrollLeft, scrollPosition);
         }, 150);
 
         setTimeout(function () {
-          window.scrollTo(scrollLeft, scrollPosition);
+          eventbriteWindow.scrollTo(scrollLeft, scrollPosition);
         }, 500);
       }
     }
 
     function loadEventbriteScript() {
+      if (!canAccessParent) {
+        console.info(
+          "Cross-origin embedding detected; the parent must load parent-eventbrite-bridge.js.",
+        );
+        return;
+      }
+
+      var scriptDocument = eventbriteDocument;
+      var scriptWindow = eventbriteWindow;
       if (
-        !window.EBWidgets &&
-        !document.querySelector('script[src*="eb_widgets.js"]')
+        !scriptWindow.EBWidgets &&
+        !scriptDocument.querySelector('script[src*="eb_widgets.js"]')
       ) {
-        var script = document.createElement("script");
+        var script = scriptDocument.createElement("script");
         script.src = "https://www.eventbrite.hk/static/widgets/eb_widgets.js";
         script.onload = function () {
           console.log("Eventbrite script loaded successfully");
@@ -272,10 +320,24 @@ document.addEventListener("DOMContentLoaded", function () {
         script.onerror = function () {
           console.error("Failed to load Eventbrite script");
         };
-        document.head.appendChild(script);
+        scriptDocument.head.appendChild(script);
         console.log("Loading Eventbrite script...");
-      } else if (window.EBWidgets) {
+      } else if (scriptWindow.EBWidgets) {
         setTimeout(createStaticWidgetsOnce, 100);
+      } else {
+        var existingScript = scriptDocument.querySelector(
+          'script[src*="eb_widgets.js"]',
+        );
+        existingScript.addEventListener("load", createStaticWidgetsOnce, {
+          once: true,
+        });
+        existingScript.addEventListener(
+          "error",
+          function () {
+            console.error("Failed to load Eventbrite script");
+          },
+          { once: true },
+        );
       }
     }
 
